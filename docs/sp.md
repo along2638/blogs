@@ -20,26 +20,7 @@ _**@Configuration注解的proxyBeanMethods属性**_
 ### <font style="color:rgb(44, 44, 54);">HttpServletRequest</font>
 <font style="color:rgb(44, 44, 54);">在Servlet中，可以通过</font>`<font style="color:rgb(44, 44, 54);">HttpServletRequest</font>`<font style="color:rgb(44, 44, 54);">对象来获取客户端的IP地址。通常使用</font>`<font style="color:rgb(44, 44, 54);">getRemoteAddr()</font>`<font style="color:rgb(44, 44, 54);">方法来直接获取客户端的IP地址。此外，还可以从HTTP请求头中查找</font>`<font style="color:rgb(44, 44, 54);">X-Forwarded-For</font>`<font style="color:rgb(44, 44, 54);">或</font>`<font style="color:rgb(44, 44, 54);">X-Real-IP</font>`<font style="color:rgb(44, 44, 54);">等字段，因为这些字段可能会包含经过代理服务器或负载均衡器的真实客户端IP地址。</font>
 
-```java
-protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    String clientIp = request.getRemoteAddr(); // 获取客户端IP地址
 
-    // 检查是否有代理服务器或负载均衡器设置的头部
-    String forwardedFor = request.getHeader("X-Forwarded-For");
-    if (forwardedFor != null && forwardedFor.length() > 0) {
-        clientIp = forwardedFor.split(",")[0]; // 取第一个IP作为客户端IP
-    }
-
-    String realIp = request.getHeader("X-Real-IP");
-    if (realIp != null && realIp.length() > 0) {
-        clientIp = realIp; // 如果存在X-Real-IP，则取这个IP
-    }
-
-    // 输出客户端IP地址
-    System.out.println("Client IP: " + clientIp);
-    // 进一步处理...
-}
-```
 
 1. **<font style="color:rgb(44, 44, 54);">注意安全性和准确性</font>**<font style="color:rgb(44, 44, 54);">： 使用</font>`<font style="color:rgb(44, 44, 54);">X-Forwarded-For</font>`<font style="color:rgb(44, 44, 54);">或</font>`<font style="color:rgb(44, 44, 54);">X-Real-IP</font>`<font style="color:rgb(44, 44, 54);">等请求头来获取客户端IP地址时，需要注意这些字段可能被恶意修改或伪造。因此，在涉及安全敏感操作时，应谨慎使用这些字段，并考虑使用可信的代理服务器或负载均衡器提供的信息。</font>
 2. **<font style="color:rgb(44, 44, 54);">IPv6支持</font>**<font style="color:rgb(44, 44, 54);">： 如果客户端使用IPv6连接，则</font>`<font style="color:rgb(44, 44, 54);">getRemoteAddr()</font>`<font style="color:rgb(44, 44, 54);">返回的可能是IPv6地址。在这种情况下，需要额外处理IPv6地址。</font>
