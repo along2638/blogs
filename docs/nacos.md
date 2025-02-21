@@ -1,3 +1,7 @@
+# Nacos学习
+
+## 一、关于nacos配置加载
+
 <font style="color:rgb(77, 77, 77);">如何去加载nacos中的配置文件:</font>
 
 ![](https://cdn.nlark.com/yuque/0/2024/png/43514497/1724320811389-98998e26-f6b6-441f-a9d5-ff1331dfd713.png)
@@ -43,6 +47,8 @@
 
 ---
 
+## 二、配置文件的优先级
+
 当使用对应的bootstrap进行配置的时候要注意对应的配置的优先级：<font style="color:#DF2A3F;">bootstrap.yml>application.properties>application.yml>外部文件</font>（多文件遵守properties>yml）
 
 ```yaml
@@ -85,7 +91,9 @@ spring:
 
 ---
 
-配置管理：当服务启动的时候自动会拉去 nacos 上的配置具体规则
+## 三、配置管理
+
+当服务启动的时候自动会拉去 nacos 上的配置具体规则
 
 ${spring.applcation.name}-${spring.profiles.active}-${spring.could.nacos.config.file-extension}
 
